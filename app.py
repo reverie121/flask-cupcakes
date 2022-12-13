@@ -1,21 +1,26 @@
 from flask import Flask, request, jsonify, render_template
-# from flask_debugtoolbar import DebugToolbarExtension
+from flask_debugtoolbar import DebugToolbarExtension
 from models import db, connect_db, Cupcake
+from flask_cors import CORS
+
 
 app = Flask(__name__)
+CORS(app)
+
 
 app.config['SECRET_KEY'] = "do*not*tell"
-# app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
+app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///cupcakes'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-# app.config['SQLALCHEMY_ECHO'] = True
+app.config['SQLALCHEMY_ECHO'] = True
 
 connect_db(app)
 
 db.create_all()
 
-# debug = DebugToolbarExtension(app)
+debug = DebugToolbarExtension(app)
+
 
 def serialize_cupcake(cupcake):
     """Serialize a cupcake SQLAlchemy obj to dictionary."""
