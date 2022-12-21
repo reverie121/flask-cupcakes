@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify, render_template
 from flask_debugtoolbar import DebugToolbarExtension
 from models import db, connect_db, Cupcake
+from forms import AddCupcakeForm
 from flask_cors import CORS
 
 
@@ -39,7 +40,8 @@ def serialize_cupcake(cupcake):
 @app.route('/')
 def main():
     """ Shows list of cupcakes with form to add more. """
-    return render_template('index.html')
+    form = AddCupcakeForm()
+    return render_template('index.html', form=form)
 
 
 @app.route('/api/cupcakes')
